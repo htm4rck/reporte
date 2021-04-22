@@ -1,0 +1,269 @@
+\documentclass[pdftex,12pt,oneside,a4paper,spanish, english, brazil]{abntex2}
+\PassOptionsToPackage{english}{babel}
+
+% ----------------------------------------------------------------------------------------
+% - PACOTES
+  \usepackage{sty/configs}                  % Pacotes utilizados
+  \usepackage{sty/metadados_rt}             % Dados do órgão / cliente
+  \usepackage{sty/dados_cpai}               % Dados do CPAI/FUB
+  \usepackage{sty/vocabulario}              % Vocabulário específico do projeto
+  \usepackage{sty/leiaute_rt}               % Definições de layout do documento
+
+% ----------------------------------------------------------------------------------------
+\addto\captionsbrazil{
+	%% ajusta nomes padroes do babel
+	\renewcommand{\bibname}{Indice}
+	\renewcommand{\contentsname}{Indice}
+	\renewcommand{\indexname}{\’Indice}
+	\renewcommand{\listfigurename}{Lista de ilustra\c{c}\~{o}es}
+	\renewcommand{\listtablename}{Lista de tabelas}
+	%% ajusta nomes usados com a macro \autoref
+	\renewcommand{\pageautorefname}{p\’agina}
+	\renewcommand{\sectionautorefname}{se{\c c}\~ao}
+	\renewcommand{\subsectionautorefname}{subse{\c c}\~ao}
+	\renewcommand{\paragraphautorefname}{par\’agrafo}
+	\renewcommand{\subsubsectionautorefname}{subse{\c c}\~ao}
+}
+
+% ----------------------------------------------------------------------------------------
+% - INÍCIO DO DOCUMENTO
+  \begin{document}
+      \begin{sloppypar}
+          
+          % Seleciona o idioma do documento (conforme pacotes do babel)
+            %\selectlanguage{english}
+            %\selectlanguage{spanish}
+            
+          % Retira espaço extra obsoleto entre as frases.
+            \frenchspacing
+          
+          % ------------------------------------------------------------------------------
+          % - ESTRUTURA DO DOCUMENTO
+          % ------------------------------------------------------------------------------
+          % ------------------------------------------------------------------------------
+          % - PRÉ-TEXTUAL
+          % ------------------------------------------------------------------------------
+          \pretextual
+
+          % Capa
+            \input{pre-textual/capa}
+            \cleardoublepage
+          
+
+          % Filiação CPAI
+            %\input{pre-textual/filiacao_cpai}
+            %\cleardoublepage
+
+          % Inserir a ficha bibliografica
+            %\input{pre-textual/ficha_catalografica}
+
+          % Sumarios
+            \vspace{1cm}
+            %\tableofcontents
+           
+          % ------------------------------------------------------------------------------
+          % - TEXTUAL
+          % ------------------------------------------------------------------------------
+          \textual
+          
+          
+          % Capítulo
+            \chapter{Configuracion}
+            La solución de Punto de Venta tiene como objetivo proporcionar a las empresas una aplicación Web, a través de la cual sus respectivas tiendas puedan ofrecer y vender sus productos bajo el esquema retail.
+            Asimismo, el POS se integra con diversos ERPs o sistemas legacy, actualmente el sistema se encuentra certificado para SAP Business One.
+            
+            
+            \section{Actores}
+            Punto de Venta cuenta con Roles predefinidos para sus usuarios que especifican el acceso a sus módulos, los roles pueden crear nuevos usuarios o editar los existentes de acuerdo a los requerimientos del usuario.
+            \begin{table}[htbp]
+            	\small
+            	\centering
+            	\begin{tabular}{p{0.5cm} p{3.8cm} p{10.5cm}}       		
+            		\# & ROL & DESCRIPCIÓN \\
+            		\midrule
+            		1 &	ADMINISTRADOR DEL SISTEMA & Responsable de la creación de tiendas, cajas, usuarios; asimismo otorgará los diversos accesos al sistema a los usuarios.\\
+            		2 &	ADMINISTRADOR DE TIENDA	& Es el responsable de la tienda, quién debe asegurar la correcta operación del sistema, además debe llevar un control de las ventas, de la bóveda de la tienda y de los almacenes. \\
+            		3 &	ALMACENERO	& Responsable de operar el almacén de la tienda, cuyas funciones principales son: gestión de muestras, picking y packing de los productos. \\
+            		4 &	DESPACHADOR	& Encargado de la entrega de los productos a los clientes de la tienda, una vez realizado el pago respectivo. Asimismo, se encarga de recibir las devoluciones de los productos \\
+            		5 &	CAJERO	& Responsable de entregar al cliente los comprobantes de pago y de realizar la recaudación de la compra. Asimismo, llevará un control de todo los recaudado en su caja. \\
+            		6 &	VENDEDOR	& Encargado de realizar cotizaciones, ventas y la gestión de muestras en la tienda \\
+            		7 &	VENTA RÁPIDA & Encargado de llevar el proceso de inicio a fin empezando por tomar una orden de venta y finalizado con la emisión del comprobante pudiendo a demás hacer el cobro del mismo. \\
+            		\bottomrule
+            	\end{tabular}%
+            \end{table}
+        	\newpage
+            \section{Arquitectura}
+            Para un mejor entendimiento del Punto de Venta se presenta este resumen de arquitectura que agrupa sus componentes.
+            \begin{figure}[h!]
+            	\centering
+            	\caption{PUNTO DE VENTAS} \label{fig:maia}
+            	\includegraphics[width=1\linewidth,frame=0.5pt 5pt]{img/ARQ}
+            \end{figure}
+            \section{Estructura de Tiendas}
+           
+            
+            \chapter{Módulos Punto de Venta}
+           	Agruparemos los Módulos del POS en Transacciones, Almacenamiento, Ventas y Widgets.
+           	     \begin{figure}[h!]
+           		\centering
+           		\caption{PUNTO DE VENTAS} \label{fig:maia}
+           		\includegraphics[width=0.6\linewidth,frame=0.5pt 5pt]{img/PV}
+           	\end{figure}
+              \section{Ventas}
+              Gestiona todo el proceso de venta desde la cotización hasta colocar la orden de venta.
+              \subsection{Orden de Venta}
+             La orden de venta es un documento interno con la cual podremos iniciar el proceso de venta hacia nuestros clientes, en ella podremos definir información importante para su posterior facturación.\\
+             Podemos encontrar en ella Widgets que dan soporte al vendedor para concretar sus ventas, que son: Muestras, Retornos, Resumen de Documentos, Confirmación de Picking, Clientes; para crear una orden de Venta consideraos el siguiente estándar:
+             \begin{itemize}
+              \item Elegir un cliente: se pueden elegir haciendo la búsqueda escribiendo directamente en la linea del cliente características como No de Documento (RUC, DNI) o partes del nombre o a través de un widget de búsqueda haciendo click en el icono de lupa; ademas de tener una lista de precio preferente la venta se realizara con la lista de precio del cliente elegido.\\
+             Adicionalmente al hacer ENTER sobre la linea de cliente
+             se añadira el "CLIENTE VARIOS".
+             \item Selección de Productos: al clickear cada linea podemos acceder a una consola de búsqueda de artículos en la cual podremos buscar por SKU, Código de Barras y Parte del Nombre, luego de elegir el producto de linea podremos elegir la cantidad y unidad de medida (toma la primera), tenemos integrada un lector de Código de Barras Genérico para la búsqueda de productos.
+             \item Cálculos: Los cálculos son automáticos al interactuar con cada linea del se actualizan los datos de la misma y los cálculos de cabecera. 
+         	\end{itemize}
+         	Consideraciones Opcionales:
+         	\begin{itemize}	
+         	\item Bonificaciones: Cada linea tiene un switch de ser una bonificación con lo cual el subtotal sera igual a 00.00, siento los impuestos igual al total de la linea.
+         	\item Opción de Bolsas: Se debe precisar que se ademas de aplicar los impuestos de afectación sobre este producto, la ley establece adicionalmente establece un IB(Impuesto a la bolsa); para lo cual tendremos un combo de bolsas con un botón que agrega al detalle una linea por el producto y
+         	una linea  por el IB, de obsequiar la bolsa solo tendremos un botón que agrega el impuesto
+         	por cada bolsa.
+         	\end{itemize}
+              Para continuar con el proceso de venta podremos poner la Orden de Venta en los estados de:
+              \begin{itemize}
+              	\item Enviado a Picking: esta función envía una alerta hacia almacén para un proceso de atención que finaliza enviando los productos a Despacho.
+              	\item Guardado: podremos almacenar la OV a la espera de continuar con ella en un segundo momento.
+              \end{itemize}
+              \subsection{Venta Rápida}
+              \begin{figure}[h!]
+              	\centering
+              	\caption{Ventas} \label{fig:maia}
+              	\includegraphics[width=0.65\linewidth,frame=0.5pt 5pt]{img/VENTA}
+              \end{figure}
+              La venta rápida tiene como finalidad generar todos los documentos asociados a una venta de manera que permita realizar el proceso completo de la venta; generando Orden de Venta, Movimiento de Existencias, Orden despacho, Comprobante desde una sola interfaz gráfica.\\
+              
+              El modulo cuenta con la integración de los maestros de productos, Lista de Precios y Almacenes, el proceso que se sigue para la venta rápida es el siguiente:
+              \begin{itemize}
+              	\item Elegir un cliente: se pueden elegir haciendo la búsqueda escribiendo directamente en la linea del cliente características como No de Documento (RUC, DNI) o partes del nombre o a través de un widget de búsqueda haciendo click en el icono de lupa; ademas de tener una lista de precio preferente la venta se realizara con la lista de precio del cliente elegido.\\
+              	Adicionalmente al hacer ENTER sobre la linea de cliente
+              	se añadira el "CLIENTE VARIOS".
+              	\item Selección de Productos: al clickear cada linea podemos acceder a una consola de búsqueda de artículos en la cual podremos buscar por SKU, Código de Barras y Parte del Nombre, luego de elegir el producto de linea podremos elegir la cantidad y unidad de medida (toma la primera), tenemos integrada un lector de Código de Barras Genérico para la búsqueda de productos.
+              	\item Cálculos: Los cálculos son automáticos al interactuar con cada linea del se actualizan los datos de la misma y los cálculos de cabecera. 
+              \end{itemize}
+              Consideraciones Opcionales:
+              \begin{itemize}	
+              	\item Bonificaciones: Cada linea tiene un switch de ser una bonificación con lo cual el subtotal sera igual a 00.00, siento los impuestos igual al total de la linea.
+              	\item Opción de Bolsas: Se debe precisar que se ademas de aplicar los impuestos de afectación sobre este producto, la ley establece adicionalmente establece un IB(Impuesto a la bolsa); para lo cual tendremos un combo de bolsas con un botón que agrega al detalle una linea por el producto y
+              	una linea  por el IB, de obsequiar la bolsa solo tendremos un botón que agrega el impuesto
+              	por cada bolsa.
+              \end{itemize}
+              Para continuar con el proceso de venta debemos culminarla con los siguientes pasos:
+              \begin{itemize}
+              	\item Vender: Que resuelve todos los documentos de que generan la venta emitiendo el Comprobante.
+              	\item Cobrar: Para finalizar la venta tendremos la opcion de ir al modulo de Cobranzas y cerrar el comprobante emitido.
+              \end{itemize}
+              \subsection{Cotización}
+              Permite registrar un documento informativo que no genera un registro contable; permitiendo que el vendedor pueda entregarle una propuesta formal que puede concretarse en una futura venta a sus clientes.\\
+              Observaciones:
+              
+              El modulo cuenta con la integración de los maestros de productos, Lista de Precios y Almacenes, el proceso que se sigue para cotización es el siguiente:
+              \begin{itemize}
+              	\item Elegir un cliente: haciendo la búsqueda escribiendo directamente en la linea del cliente características como No de Documento (RUC, DNI) o partes del nombre o a través de un widget de búsqueda haciendo click en el icono de lupa; ademas de tener una lista de precio preferente la venta se realizara con la lista de precio del cliente elegido.
+              	\item Selección de Productos: al clickear cada linea podemos acceder a una consola de búsqueda de artículos en la cual podremos buscar por SKU, Código de Barras y Parte del Nombre, luego de elegir el producto de linea podremos elegir la cantidad y unidad de medida (toma la primera), tenemos integrada un lector de Código de Barras Genérico para la búsqueda de productos.
+              	\item Cálculos: Los cálculos son automáticos al interactuar con cada linea del se actualizan los datos de la misma y los cálculos de cabecera. 
+              \end{itemize}
+              Al finalizar el proceso debemos guardar la cotización, posteriormente podremos facilitarla mediante: Impresión Física y Envió a Correo.
+            \section{Almacenamiento}
+            Estos módulos gestionan las alertas hacia almacén para gestionar la salida de los pedidos.
+              \subsection{Movimiento de Existencias}
+              Permiten mover de lógicamente los productos dentro de la tienda sin la necesidad de un documento adicional.\\
+              Observaciones:
+              \begin{itemize}
+                \item Los movimientos serian virtuales para el cambio de ubicación de ventas a una ubicación de despacho.
+                \item La transferencia entre tiendas son de caso muy particulares.
+                \item Podría ser transferido a una ubicación de merma para ser trasladado posteriormente a otra tienda.
+                \item Las transferencias de Items entre tiendas no están contemplados en el Punto de venta.
+              \end{itemize}
+              \subsection{Almacén - Despacho *No va por punto de Venta}
+              En estos módulos se gestionan los movimientos de existencias como Alertas ordenadas de forma que se atiendas en el orden de tiempo previsto.
+              Observaciones:
+              \begin{itemize}
+              	\item Se utilizara para finalizar las compras que están sujetas a aprobación.
+              	\item También se utilizara para finalizar el proceso de facturas de reserva.
+              \end{itemize}
+              \subsection{Devoluciones}
+              Este modulo permite devolver los productos de forma parcial o total de forma que se ingrese a la ubicación de despacho de la tienda para posteriormente ser movida a otra ubicación.\\
+              Observaciones:
+              \begin{itemize}
+              	\item Se hacen devoluciones por un reclamo, y genera una guía de remisión a una ubicación de merma.
+              	\item Pueden ser devueltos en unidades menores por ejemplo de una pedido en millares podría hacerse devoluciones por unidades.
+              \end{itemize}
+              \section{Transacciones}
+              Estos módulos ejecutan las operaciones que finalizan las compras, y la gestión de las cajas en cada tienda.
+              \subsection{Comprobantes}
+              Este Módulo permite Generar Facturas electrónicas con todos los parámetros fiscales que exigidos.\\
+              Observaciones:
+              \begin{itemize}
+              	\item Se emitirán Facturas y boletas
+              	\item Tienen un caso particular donde generan factura de exportación para un cliente en Chile.
+              	\item Factura de Exportación no esta contemplada en Punto de Venta.
+              	\item ***Reutilizar de Series Legales; cual seria el mayor holgura que le podríamos dar?
+              \end{itemize}
+              \subsection{Factura de Reserva}
+              Se pueden generar facturas y cobrarlas para una entrega posterior.\\
+              Observaciones:
+              \begin{itemize}
+              	\item No mueve Stock.
+              	\item dependiendo del cliente la entrega debería ser programada con 3 - 15 días de anticipación.
+              	\item Esta sujeta al Stock previsto para el día de entrega.
+              \end{itemize}
+              No mueve Stock, dependiendo del cliente la entrega debería ser programada con 3 - 15 días de anticipación y esta sujeta a stock.
+              \subsection{Pagos}
+              Este Modulo permite hacer la cobranza contra el saldo de los comprobantes creados en el Punto de Venta.
+              Observaciones:
+              \begin{itemize}
+              	\item Se reciben efectivo soles, dolares, aceptan tarjetas (mastercard y visa), depósitos y transferencias interbancarias (se registra en ambos casos el numero de operación) tienen cuentas en 4 bancos.
+              	\item Pueden ser anulados o editados según sea el caso; si el monto no es correcto deberíamos anularlo y crear un nuevo pago.
+              	\item Si solo se requiere actualizar los detalles de la operación se podría editar el pago.
+              \end{itemize}
+              
+              
+              \subsection{Apertura y Cierre de Caja}
+              Estos módulos permiten registra el estado en el que se encuentra la caja al iniciar y terminar las operaciones del día.\\
+              Observaciones:
+              \begin{itemize}
+              	\item Inician y cierran el día con S/00.00.
+              	\item Disponen de una caja Chica ajena al PV para la disposición de efectivo que necesiten para sus operaciones.
+              \end{itemize}
+              \subsection{Movimientos de caja}
+              Nos permite visualizar los movimientos que se hicieron en un determinado día y turno de cada caja; ademas cuenta con Widgets para enviar formalmente el dinero entre cajas y transferencias externas.
+              \begin{itemize}
+              	\item Solo disponen de una caja por tienda pudiendo ser utilizada por 2 cajeros.
+              	\item En los movimientos seria visualizados por los usuarios de cada caja.
+              	\item Emitiría un reporte que es el consolidado o resumen de los movimientos del día para ser firmado.
+              	\item El administrador de tienda central debería ver los movimientos de todas las cajas en todas las sucursales.
+              \end{itemize}
+              \subsection{Nota de Crédito}
+              Este modulo permite generar notas de crédito previa solicitud de devolución.
+              \begin{itemize}
+              	\item cada caja tendrá las respectivas series legales de Nota de Crédito.
+              	\item Se crean en el caso de que no se realice la entrega del producto por casos en el que el cliente no lo recibe por que ya no lo necesita o no es el producto que esperaba; nacen a partir de una factura.
+              \end{itemize}
+              \subsection{Guía de Remisión}
+              Este modulo permite generar las guías de remisión con los datos del transportista y dirección de envió en el caso de el cliente sus direcciones son pre-cargadas.\\
+              Observaciones:
+              \begin{itemize}
+              	\item ***Quienes las generan?
+              	\item Serán asociadas a un comprobante o Devolución.
+              \end{itemize}
+          \section{Widgets}
+          Se utilizan para realizar procesos asociados a otros módulos; que pueden ser llamados desde otros módulos.
+          \subsection{Clientes}
+          Este modulo permite crear un cliente con los parámetros mínimos para Facturación Electrónica.\\
+          Observaciones:
+          \begin{itemize}
+          	\item El Cliente Sera validado con Aplicaciones de Sunat y Reniec.
+          	\item Se validaran los documentos Ruc 10, 20 y Dni.
+          	\item El Cliente como minimo debera tener un email, una direccion fiscal y una de Almacen.
+          \end{itemize}
+    \end{sloppypar}
+\end{document}
